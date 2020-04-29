@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Curator(models.Model):
     title = models.CharField(max_length=120)
-    finance_cost = models.ManyToManyField('FinanceCosts')
+   # finance_cost = models.ManyToManyField('FinanceCosts')
 
 
     def __str__(self):
@@ -52,8 +52,12 @@ class FinanceCosts(models.Model): #  A 1000      B 2000
 
 
 class CuratorFinanceCostQuart(models.Model):
+    class QuartChoices:
+        ch = [(1,'I'),(2,'II'),(2,'III'),(4,'IV')]
+
+
     total = models.FloatField(verbose_name='Деньги выделенные на квартал')
-    quart = models.IntegerField(verbose_name='Квартал')
+    quart = models.IntegerField(choices=QuartChoices.ch)
     finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING, verbose_name='по статье')
     curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING)
 
